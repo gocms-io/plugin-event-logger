@@ -1,0 +1,7 @@
+{
+  "name": "Event Logger Plugin API",
+  "version": "0.0.1",
+  "description": "",
+  "title": "Event Logger",
+  "url": "{protocol}://{gocms api url}"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "event-logger.plugins.gocms.io",
+  "version" : "0.0.0",
+  "build" : 1,
+  "name" : "GoCMS Event Logger",
+  "title" : "Event Logger",
+  "urls" : "https://gocms.io/plugins",
+  "description" : "Event logger that provides middleware to log api requests and context. Useful for analytics.",
+  "author" : "Menklab LLC",
+  "authorUrl" : "www.menklab.com",
+  "authorEmail" : "justin@menklab.com",
+  "services": {
+    "healthCheck": false,
+    "bin": "event-logger",
+    "middleware": [
+      {
+        "name": "Log Event On Request",
+        "executionRank": 1000,
+        "headersToReceive": ["X-AUTH-TOKEN"],
+        "copyBody": true,
+        "continueOnError": true,
+        "passAlongError": true,
+        "disableNamespace": true
+      }
+    ]
+  }
+}

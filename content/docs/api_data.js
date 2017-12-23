@@ -1,0 +1,1 @@
+define({ "api": [  {    "type": "get",    "url": "/healthy",    "title": "Service Health Status",    "description": "<p>Used to verify that the services are up and running.</p>",    "name": "GetHealthy",    "group": "Utility",    "version": "0.0.0",    "filename": "domain/health/health_controller/health_controller.go",    "groupTitle": "Utility"  }] });

@@ -3,11 +3,12 @@ package repository
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/gocms-io/plugin-event-logger/domain/setting/setting_repository"
+	"github.com/gocms-io/plugin-event-logger/domain/event_logger/event_logger_repository"
 )
 
 type RepositoriesGroup struct {
 	SettingsRepository    setting_repository.ISettingsRepository
-	//EventLoggerRepository merchant_account_respository.IMerchantAccountRepository
+	EventLoggerRepository event_logger_repository.IEventLoggerRepository
 	dbx                   *sqlx.DB
 }
 
@@ -17,7 +18,7 @@ func DefaultRepositoriesGroup(dbx *sqlx.DB) *RepositoriesGroup {
 	rg := RepositoriesGroup{
 		dbx:                   dbx,
 		SettingsRepository:    setting_repository.DefaultSettingsRepository(dbx),
-		//MerchantAccountRepository: merchant_account_respository.DefaultMerchantAccountRepository(dbx),
+		EventLoggerRepository: event_logger_repository.DefaultEventLoggerRepository(dbx),
 	}
 	return &rg
 }

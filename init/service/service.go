@@ -7,13 +7,14 @@ import (
 	"github.com/gocms-io/plugin-event-logger/init/repository"
 	"github.com/gocms-io/plugin-event-logger/init/database"
 	"github.com/gocms-io/plugin-event-logger/context"
+	"github.com/gocms-io/plugin-event-logger/domain/event_logger/event_logger_service"
 )
 
 type ServicesGroup struct {
-	SettingsService        setting_service.ISettingsService
-	HealthService          health_service.IHealthService
-	//MerchantAccountService merchant_account_service.IMerchantAccountService
-	repositoriesGroup      *repository.RepositoriesGroup
+	SettingsService    setting_service.ISettingsService
+	HealthService      health_service.IHealthService
+	EventLoggerService event_logger_service.IEventLoggerService
+	repositoriesGroup  *repository.RepositoriesGroup
 }
 
 func DefaultServicesGroup(repositoriesGroup *repository.RepositoriesGroup, db *database.Database) *ServicesGroup {
@@ -30,13 +31,13 @@ func DefaultServicesGroup(repositoriesGroup *repository.RepositoriesGroup, db *d
 
 	// setup health service
 	healthService := health_service.DefaultHealthService(db)
-	//merchantAccountService := merchant_account_service.DefaultMerchantAccountService(repositoriesGroup)
+	eventLoggerService := event_logger_service.DefaultEventLoggerService(repositoriesGroup)
 
 	sg := &ServicesGroup{
-		SettingsService:        settingsService,
-		HealthService:          healthService,
-		//MerchantAccountService: merchantAccountService,
-		repositoriesGroup:      repositoriesGroup,
+		SettingsService:    settingsService,
+		HealthService:      healthService,
+		EventLoggerService: eventLoggerService,
+		repositoriesGroup:  repositoriesGroup,
 	}
 	return sg
 }

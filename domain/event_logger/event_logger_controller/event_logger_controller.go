@@ -3,8 +3,9 @@ package event_logger_controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gocms-io/plugin-event-logger/init/service"
-	"net/http"
-	"github.com/gocms-io/gocms/utility/log"
+	"github.com/gocms-io/plugin-event-logger/utility/api_utility"
+	"github.com/gocms-io/plugin-event-logger/domain/event_logger/event_logger_model"
+	"time"
 )
 
 type EventLoggerController struct {
@@ -31,8 +32,20 @@ func (elc *EventLoggerController) Default() {
 
 // serve event logger route
 func (elc *EventLoggerController) any(c *gin.Context) {
+	// send of ok before we actually log anything
+	// failing to log should not stop further execution
+	api_utility.SendCarbonCopyRequest(c)
 
-	log.Debugf("Logged Event")
-	c.Status(http.StatusOK)
+	path := c.Request.RequestURI
+	headers := c.Request.Header
+
+	event := event_logger_model.Event{
+		Headers: headers,
+		Url: path,
+		Method: c.Request.Method,
+		Datetime: time.Now(),
+	}
+
+	elc.serviceGroup.EventLoggerService.AddEventToLog(&event)
 	return
 }

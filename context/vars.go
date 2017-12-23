@@ -3,6 +3,7 @@ package context
 import (
 	"log"
 	"github.com/gocms-io/plugin-event-logger/domain/setting/setting_model"
+	"strings"
 )
 
 type envVars struct {
@@ -16,7 +17,7 @@ type envVars struct {
 type dbVars struct {
 	// App config
 	SettingsRefreshRate int64
-
+	IgnoreHeaders []string
 }
 
 func (dbVars *dbVars) LoadDbVars(settings map[string]setting_model.Setting) {
@@ -25,4 +26,8 @@ func (dbVars *dbVars) LoadDbVars(settings map[string]setting_model.Setting) {
 
 	// App config
 	dbVars.SettingsRefreshRate = GetIntOrFail("SETTINGS_REFRESH_RATE", settings)
+
+	// Headers To Ignore
+	ignoreHeadersStr := GetStringOrFail("IGNORE_HEADERS", settings)
+	dbVars.IgnoreHeaders = strings.Split(ignoreHeadersStr, ",")
 }

@@ -5,7 +5,9 @@ import (
 )
 
 type Event struct {
+	Id       int64
 	Url      string
-	Headers  map[string]string
+	Method   string
+	Headers  map[string][]string
 	Datetime time.Time
 }
